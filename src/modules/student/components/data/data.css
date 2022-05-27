@@ -1,0 +1,255 @@
+.data-container {
+  margin: 1rem 5rem;
+}
+
+.table-header {
+  background: rgb(200, 173, 226);
+}
+
+.col,
+.col-1,
+.col-10,
+.col-11,
+.col-12,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-auto,
+.col-lg,
+.col-lg-1,
+.col-lg-10,
+.col-lg-11,
+.col-lg-12,
+.col-lg-2,
+.col-lg-3,
+.col-lg-4,
+.col-lg-5,
+.col-lg-6,
+.col-lg-7,
+.col-lg-8,
+.col-lg-9,
+.col-lg-auto,
+.col-md,
+.col-md-1,
+.col-md-10,
+.col-md-11,
+.col-md-12,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-md-auto,
+.col-sm,
+.col-sm-1,
+.col-sm-10,
+.col-sm-11,
+.col-sm-12,
+.col-sm-2,
+.col-sm-3,
+.col-sm-4,
+.col-sm-5,
+.col-sm-6,
+.col-sm-7,
+.col-sm-8,
+.col-sm-9,
+.col-sm-auto,
+.col-xl,
+.col-xl-1,
+.col-xl-10,
+.col-xl-11,
+.col-xl-12,
+.col-xl-2,
+.col-xl-3,
+.col-xl-4,
+.col-xl-5,
+.col-xl-6,
+.col-xl-7,
+.col-xl-8,
+.col-xl-9,
+.col-xl-auto {
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.col:first-child,
+.col-1:first-child,
+.col-10:first-child,
+.col-11:first-child,
+.col-12:first-child,
+.col-2:first-child,
+.col-3:first-child,
+.col-4:first-child,
+.col-5:first-child,
+.col-6:first-child,
+.col-7:first-child,
+.col-8:first-child,
+.col-9:first-child,
+.col-auto:first-child,
+.col-lg:first-child,
+.col-lg-1:first-child,
+.col-lg-10:first-child,
+.col-lg-11:first-child,
+.col-lg-12:first-child,
+.col-lg-2:first-child,
+.col-lg-3:first-child,
+.col-lg-4:first-child,
+.col-lg-5:first-child,
+.col-lg-6:first-child,
+.col-lg-7:first-child,
+.col-lg-8:first-child,
+.col-lg-9:first-child,
+.col-lg-auto:first-child,
+.col-md:first-child,
+.col-md-1:first-child,
+.col-md-10:first-child,
+.col-md-11:first-child,
+.col-md-12:first-child,
+.col-md-2:first-child,
+.col-md-3:first-child,
+.col-md-4:first-child,
+.col-md-5:first-child,
+.col-md-6:first-child,
+.col-md-7:first-child,
+.col-md-8:first-child,
+.col-md-9:first-child,
+.col-md-auto:first-child,
+.col-sm:first-child,
+.col-sm-1:first-child,
+.col-sm-10:first-child,
+.col-sm-11:first-child,
+.col-sm-12:first-child,
+.col-sm-2:first-child,
+.col-sm-3:first-child,
+.col-sm-4:first-child,
+.col-sm-5:first-child,
+.col-sm-6:first-child,
+.col-sm-7:first-child,
+.col-sm-8:first-child,
+.col-sm-9:first-child,
+.col-sm-auto:first-child,
+.col-xl:first-child,
+.col-xl-1:first-child,
+.col-xl-10:first-child,
+.col-xl-11:first-child,
+.col-xl-12:first-child,
+.col-xl-2:first-child,
+.col-xl-3:first-child,
+.col-xl-4:first-child,
+.col-xl-5:first-child,
+.col-xl-6:first-child,
+.col-xl-7:first-child,
+.col-xl-8:first-child,
+.col-xl-9:first-child,
+.col-xl-auto:first-child {
+  flex: 0;
+}
+
+.react-bs-table-add-btn {
+  background-color: rgb(170, 247, 162);
+  border: 1px solid #0c0014;
+  color: black;
+  margin: 0.5rem;
+}
+
+.react-bs-table-del-btn {
+  background-color: rgb(247, 162, 162);
+  border: 1px solid #0c0014;
+  color: black;
+  margin: 0.5rem;
+}
+
+.generate-button {
+  background-color: rgb(248, 254, 155);
+  border: 1px solid #0c0014;
+  color: black;
+  margin: 0.5rem;
+}
+
+.file-read-button {
+  background-color: rgb(155, 201, 254);
+  border: 1px solid #0c0014;
+  color: black;
+  margin: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  height: 31px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+}
+
+.react-bs-table-add-btn:hover {
+  background-color: rgb(89, 240, 78);
+  border: 1px solid #0c0014;
+  color: black;
+  -webkit-box-shadow: 0px 0px 12px 3px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 0px 12px 3px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 0px 12px 3px rgb(170, 247, 162);
+}
+
+.react-bs-table-del-btn:hover {
+  background-color: rgb(248, 104, 104);
+  border: 1px solid #0c0014;
+  color: black;
+  -webkit-box-shadow: 0px 0px 12px 3px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 0px 12px 3px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 0px 12px 3px rgb(247, 162, 162);
+}
+
+.generate-button:hover {
+  background-color: rgb(233, 244, 82);
+  border: 1px solid #0c0014;
+  color: black;
+  -webkit-box-shadow: 0px 0px 12px 3px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 0px 12px 3px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 0px 12px 3px rgb(248, 254, 155);
+}
+
+.file-read-button:hover {
+  background-color: rgb(80, 158, 248);
+  border: 1px solid #0c0014;
+  color: black;
+  -webkit-box-shadow: 0px 0px 12px 3px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 0px 12px 3px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 0px 12px 3px rgb(155, 201, 254);
+}
+
+.table-bordered td,
+.table-bordered th {
+  border: 1px solid #0c0014;
+}
+
+.table thead th {
+  border-bottom: 2px solid #0c0014;
+}
+
+.react-bs-table-bordered {
+  border-left: 1px solid #0c0014;
+  border-right: 1px solid #0c0014;
+  border-top: 1px solid #0c0014;
+  border-radius: 0px;
+}
+
+.react-bs-table {
+  background: white;
+}
+
+.search-input {
+  height: 31px;
+  margin: 0.5rem;
+}
+
+.row {
+  justify-content: space-between;
+}

@@ -1,0 +1,14 @@
+.task {
+  text-align: center;
+}
+
+.experiment-button {
+  width: 485px;
+  margin: 1rem;
+}
+
+.change-mode-button {
+  background-color: rgb(122, 207, 206);
+  color: black;
+  margin-top: 0;
+}
