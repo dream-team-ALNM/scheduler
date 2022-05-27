@@ -45,12 +45,20 @@ const Experiments: React.FC<ExperimentsProps> = ({
       const {
         timeDiff: executionTimeBranchAndBoundAlgorithm,
         accuracy: accuracyBranchAndBoundAlgorithm,
-      } = getExperimentResult(task, scheduleService.applyBranchAndBoundAlgorithm, Zmax);
+      } = getExperimentResult(
+        task,
+        scheduleService.applyBranchAndBoundAlgorithm,
+        Zmax
+      );
 
       const {
         timeDiff: executionTimeHillClimbingAlgorithm,
         accuracy: accuracyHillClimbingAlgorithm,
-      } = getExperimentResult(task, scheduleService.applyHillClimbingAlgorithm, Zmax);
+      } = getExperimentResult(
+        task,
+        scheduleService.applyHillClimbingAlgorithm,
+        Zmax
+      );
 
       results.push({
         id: i + 1,

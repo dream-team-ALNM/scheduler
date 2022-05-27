@@ -10,7 +10,7 @@ class DataService {
   public generateMany(): IStudent[][] {
     const groups = [] as IStudent[][];
     for (let i = 2; i < 7; i++) {
-      for (let j = 0; j < 15; j++) {
+      for (let j = 0; j < 100; j++) {
         groups.push(this.generateByAmountOfStudents(i));
       }
     }
