@@ -8,16 +8,21 @@ import {
   TableHeaderColumn,
 } from 'react-bootstrap-table';
 import { IStudent } from '../../interfaces';
-import { dataService } from '../../services';
 import { Button } from 'react-bootstrap';
 
 type DataProps = {
   students: IStudent[];
   setData: any;
   openFileSelector: () => void;
+  onGenerateButtonClick: () => void;
 };
 
-const Data: React.FC<DataProps> = ({ students, setData, openFileSelector }) => {
+const Data: React.FC<DataProps> = ({
+  students,
+  setData,
+  openFileSelector,
+  onGenerateButtonClick,
+}) => {
   const customConfirm = (next: () => void, dropRowKeys: any[]) => {
     const dropRowKeysStr = dropRowKeys.join(',');
     // eslint-disable-next-line no-restricted-globals
@@ -26,13 +31,9 @@ const Data: React.FC<DataProps> = ({ students, setData, openFileSelector }) => {
     }
   };
 
-  const handleGenerateButtonClick = () => {
-    setData(dataService.generate());
-  };
-
   const createCustomGenerateButton = () => {
     return (
-      <Button className="generate-button" onClick={handleGenerateButtonClick}>
+      <Button className="generate-button" onClick={onGenerateButtonClick}>
         Згенерувати дані
       </Button>
     );

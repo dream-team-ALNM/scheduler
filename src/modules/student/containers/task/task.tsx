@@ -11,6 +11,7 @@ import { scheduleService } from '../../../shared/services';
 import { Controls, Data } from '../../components';
 import './task.css';
 import { Button } from 'react-bootstrap';
+import { dataService } from '../../services';
 
 type TaskProps = {
   toggleIsExperimentsMode: () => void;
@@ -50,6 +51,10 @@ const Task: React.FC<TaskProps> = ({ toggleIsExperimentsMode }) => {
         !isNaN(t) &&
         !isNaN(d)
     );
+  };
+
+  const handleGenerateButtonClick = () => {
+    setStudents(dataService.generate());
   };
 
   const handleGreedyAlgorithmButtonClick = () => {
@@ -108,6 +113,7 @@ const Task: React.FC<TaskProps> = ({ toggleIsExperimentsMode }) => {
         </div>
       ) : (
         <Data
+          onGenerateButtonClick={handleGenerateButtonClick}
           students={students}
           setData={setStudents}
           openFileSelector={openFileSelector}
