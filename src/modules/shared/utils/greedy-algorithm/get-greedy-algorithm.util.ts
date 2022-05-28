@@ -1,6 +1,6 @@
-import { getZmax } from "../../helpers/array";
-import { IJob } from "../../interfaces";
-import { Result } from "../../types";
+import { getZmax } from '../../helpers/array';
+import { IJob } from '../../interfaces';
+import { Result } from '../../types';
 
 const getGreedyAlgorithm =
   <T extends IJob>(sortJobsFnc: (job1: T, job2: T) => number) =>
