@@ -5,7 +5,7 @@ import { useFilePicker } from 'use-file-picker';
 import { css } from '@emotion/react';
 import FadeLoader from 'react-spinners/FadeLoader';
 import { IStudent } from '../../interfaces';
-import { ALLOWED_FILE_TYPES } from '../../constants';
+import { ALLOWED_FILE_TYPES, TYPES_ERROR_MESSAGE } from '../../constants';
 import { FileType } from '../../enums';
 import { scheduleService } from '../../../shared/services';
 import { Controls, Data } from '../../components';
@@ -38,7 +38,26 @@ const Task: React.FC<TaskProps> = ({ toggleIsExperimentsMode }) => {
     }
   }, [filesContent]);
 
+  const checkTypes = () => {
+    return students.every(
+      ({ i, r, t, d }) =>
+        typeof i === 'number' &&
+        typeof r === 'number' &&
+        typeof t === 'number' &&
+        typeof d === 'number' &&
+        !isNaN(i) &&
+        !isNaN(r) &&
+        !isNaN(t) &&
+        !isNaN(d)
+    );
+  };
+
   const handleGreedyAlgorithmButtonClick = () => {
+    console.log(checkTypes());
+    if (!checkTypes()) {
+      alert(TYPES_ERROR_MESSAGE);
+      return;
+    }
     const { scheduledJobs, Zmax } =
       scheduleService.applyGreedyAlgorithm(students);
     setScheduledStudents(scheduledJobs);
@@ -46,6 +65,10 @@ const Task: React.FC<TaskProps> = ({ toggleIsExperimentsMode }) => {
   };
 
   const handleBranchAndBoundAlgorithmButtonClick = () => {
+    if (!checkTypes()) {
+      alert(TYPES_ERROR_MESSAGE);
+      return;
+    }
     const { scheduledJobs, Zmax } =
       scheduleService.applyBranchAndBoundAlgorithm(students);
     setScheduledStudents(scheduledJobs);
@@ -53,6 +76,10 @@ const Task: React.FC<TaskProps> = ({ toggleIsExperimentsMode }) => {
   };
 
   const handleHillClimbingAlgorithmButtonClick = () => {
+    if (!checkTypes()) {
+      alert(TYPES_ERROR_MESSAGE);
+      return;
+    }
     const { scheduledJobs, Zmax } =
       scheduleService.applyHillClimbingAlgorithm(students);
     setScheduledStudents(scheduledJobs);
@@ -125,7 +152,11 @@ const Task: React.FC<TaskProps> = ({ toggleIsExperimentsMode }) => {
           </div>
         </>
       )}
-      <Button variant="outline-info" className="change-mode-button" onClick={toggleIsExperimentsMode}>
+      <Button
+        variant="outline-info"
+        className="change-mode-button"
+        onClick={toggleIsExperimentsMode}
+      >
         Перейти до режиму експерименту
       </Button>
     </div>

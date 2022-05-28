@@ -1,1 +1,2 @@
-export * from './allowed-file-types';
+export * from './allowed-file-types.constant';
+export * from './types-error-message.constant';
