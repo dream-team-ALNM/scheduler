@@ -7,10 +7,10 @@ class DataService {
     return this.generateByAmountOfStudents(amountOfStudents);
   }
 
-  public generateMany(): IStudent[][] {
+  public generateMany(maxAmountOfStudents: number, amountOfSame: number): IStudent[][] {
     const groups = [] as IStudent[][];
-    for (let i = 2; i < 7; i++) {
-      for (let j = 0; j < 100; j++) {
+    for (let i = 2; i < maxAmountOfStudents; i++) {
+      for (let j = 0; j < amountOfSame; j++) {
         groups.push(this.generateByAmountOfStudents(i));
       }
     }

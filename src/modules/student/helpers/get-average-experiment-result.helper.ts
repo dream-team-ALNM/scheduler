@@ -4,47 +4,36 @@ const getAverageExperimentResult = (
   results: IExperiment[],
   taskSize: number
 ): IAverageExperimentResult => {
-  const nSizeResults = results.filter((result) => result.taskSize === taskSize);
-  const averageExecutionTimeGreedyAlgorithm =
-    results
-      .map(({ executionTimeGreedyAlgorithm }) => executionTimeGreedyAlgorithm)
-      .reduce((a, b) => a + b, 0) / nSizeResults.length;
-  const averageAccuracyGreedyAlgorithm =
-    results
-      .map(({ accuracyGreedyAlgorithm }) => accuracyGreedyAlgorithm)
-      .reduce((a, b) => a + b, 0) / nSizeResults.length;
-  const averageExecutionTimeBranchAndBoundAlgorithm =
-    results
-      .map(
-        ({ executionTimeBranchAndBoundAlgorithm }) =>
-          executionTimeBranchAndBoundAlgorithm
-      )
-      .reduce((a, b) => a + b, 0) / nSizeResults.length;
-  const averageAccuracyBranchAndBoundAlgorithm =
-    results
-      .map(
-        ({ accuracyBranchAndBoundAlgorithm }) => accuracyBranchAndBoundAlgorithm
-      )
-      .reduce((a, b) => a + b, 0) / nSizeResults.length;
-  const averageExecutionTimeHillClimbingAlgorithm =
-    results
-      .map(
-        ({ executionTimeHillClimbingAlgorithm }) =>
-          executionTimeHillClimbingAlgorithm
-      )
-      .reduce((a, b) => a + b, 0) / nSizeResults.length;
-  const averageAccuracyHillClimbingAlgorithm =
-    results
-      .map(({ accuracyHillClimbingAlgorithm }) => accuracyHillClimbingAlgorithm)
-      .reduce((a, b) => a + b, 0) / nSizeResults.length;
+  const getPartialResult = (fieldName: string) => {
+    if (results.some((result) => !!result.executionTimeGreedyAlgorithm)) {
+      return (
+        (results
+          .filter((result) => !!result[fieldName])
+          .map((result) => result[fieldName])
+          .reduce((a, b) => (a as number) + (b as number), 0) as number) /
+        taskSize
+      );
+    }
+  };
+
   return {
     taskSize,
-    averageExecutionTimeGreedyAlgorithm,
-    averageAccuracyGreedyAlgorithm,
-    averageExecutionTimeBranchAndBoundAlgorithm,
-    averageAccuracyBranchAndBoundAlgorithm,
-    averageExecutionTimeHillClimbingAlgorithm,
-    averageAccuracyHillClimbingAlgorithm,
+    averageExecutionTimeGreedyAlgorithm: getPartialResult(
+      'executionTimeGreedyAlgorithm'
+    ),
+    averageAccuracyGreedyAlgorithm: getPartialResult('accuracyGreedyAlgorithm'),
+    averageExecutionTimeBranchAndBoundAlgorithm: getPartialResult(
+      'executionTimeBranchAndBoundAlgorithm'
+    ),
+    averageAccuracyBranchAndBoundAlgorithm: getPartialResult(
+      'accuracyBranchAndBoundAlgorithm'
+    ),
+    averageExecutionTimeHillClimbingAlgorithm: getPartialResult(
+      'executionTimeHillClimbingAlgorithm'
+    ),
+    averageAccuracyHillClimbingAlgorithm: getPartialResult(
+      'accuracyHillClimbingAlgorithm'
+    ),
   };
 };
 

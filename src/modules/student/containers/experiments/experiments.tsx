@@ -26,7 +26,7 @@ const Experiments: React.FC<ExperimentsProps> = ({
   const handleRunExperimentsClick = () => {
     const results = [] as IExperiment[];
     const averageResults = [] as IAverageExperimentResult[];
-    const tasks = dataService.generateMany();
+    const tasks = dataService.generateMany(7, 100);
     tasks.forEach((task, i) => {
       const lastTaskSize = results[results.length - 1]?.taskSize;
       if (
@@ -70,6 +70,49 @@ const Experiments: React.FC<ExperimentsProps> = ({
         executionTimeHillClimbingAlgorithm,
         accuracyHillClimbingAlgorithm,
       });
+      console.log(results.length);
+    });
+    setExperiments(results);
+    setAverageExperimentResults(averageResults);
+  };
+
+  const handleRunBigExperimentsClick = () => {
+    const results = [] as IExperiment[];
+    const averageResults = [] as IAverageExperimentResult[];
+    const tasks = dataService.generateMany(1000, 100);
+    tasks.forEach((task, i) => {
+      const lastTaskSize = results[results.length - 1]?.taskSize;
+      if (
+        (lastTaskSize && task.length > lastTaskSize) ||
+        i === tasks.length - 1
+      ) {
+        averageResults.push(getAverageExperimentResult(results, lastTaskSize));
+      }
+      const Zmax = scheduleService.getZmaxViaBruteForceSearchAlgorithm(task);
+
+      const {
+        timeDiff: executionTimeGreedyAlgorithm,
+        accuracy: accuracyGreedyAlgorithm,
+      } = getExperimentResult(task, scheduleService.applyGreedyAlgorithm, Zmax);
+
+      const {
+        timeDiff: executionTimeHillClimbingAlgorithm,
+        accuracy: accuracyHillClimbingAlgorithm,
+      } = getExperimentResult(
+        task,
+        scheduleService.applyHillClimbingAlgorithm,
+        Zmax
+      );
+
+      results.push({
+        id: i + 1,
+        taskSize: task.length,
+        executionTimeGreedyAlgorithm,
+        accuracyGreedyAlgorithm,
+        executionTimeHillClimbingAlgorithm,
+        accuracyHillClimbingAlgorithm,
+      });
+      console.log(results.length);
     });
     setExperiments(results);
     setAverageExperimentResults(averageResults);
@@ -89,7 +132,14 @@ const Experiments: React.FC<ExperimentsProps> = ({
         >
           Запустити експерименти
         </Button>
-        {!!experiments.length && (
+        <Button
+          variant="danger"
+          className="experiment-button"
+          onClick={handleRunBigExperimentsClick}
+        >
+          Запустити експерименти для задач великих розмірностей
+        </Button>
+        {!!experiments.length && experiments.length < 1000 && (
           <>
             <Chart
               data={averageExperimentResults}
