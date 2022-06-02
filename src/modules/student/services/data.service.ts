@@ -3,11 +3,14 @@ import { IStudent } from '../interfaces';
 
 class DataService {
   public generate(): IStudent[] {
-    const amountOfStudents = getRandomNumber(10000, 10001);
+    const amountOfStudents = getRandomNumber(300, 301);
     return this.generateByAmountOfStudents(amountOfStudents);
   }
 
-  public generateMany(maxAmountOfStudents: number, amountOfSame: number): IStudent[][] {
+  public generateMany(
+    maxAmountOfStudents: number,
+    amountOfSame: number
+  ): IStudent[][] {
     const groups = [] as IStudent[][];
     for (let i = 2; i < maxAmountOfStudents; i++) {
       for (let j = 0; j < amountOfSame; j++) {
