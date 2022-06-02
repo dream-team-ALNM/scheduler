@@ -42,17 +42,24 @@ const Task: React.FC<TaskProps> = ({ toggleIsExperimentsMode }) => {
   }, [filesContent]);
 
   const checkTypes = () => {
-    return students.every(
-      ({ i, r, t, d }) =>
-        typeof i === 'number' &&
-        typeof r === 'number' &&
-        typeof t === 'number' &&
-        typeof d === 'number' &&
-        !isNaN(i) &&
-        !isNaN(r) &&
-        !isNaN(t) &&
-        !isNaN(d)
-    );
+    return students
+      .map(({ i, r, t, d }) => ({
+        i: +i,
+        r: +r,
+        t: +t,
+        d: +d,
+      }))
+      .every(
+        ({ i, r, t, d }) =>
+          typeof i === 'number' &&
+          typeof r === 'number' &&
+          typeof t === 'number' &&
+          typeof d === 'number' &&
+          !isNaN(i) &&
+          !isNaN(r) &&
+          !isNaN(t) &&
+          !isNaN(d)
+      );
   };
 
   const handleGenerateButtonClick = () => {
@@ -60,7 +67,6 @@ const Task: React.FC<TaskProps> = ({ toggleIsExperimentsMode }) => {
   };
 
   const handleGreedyAlgorithmButtonClick = () => {
-    console.log(checkTypes());
     if (!checkTypes()) {
       alert(TYPES_ERROR_MESSAGE);
       return;
@@ -69,7 +75,6 @@ const Task: React.FC<TaskProps> = ({ toggleIsExperimentsMode }) => {
       scheduleService.applyGreedyAlgorithm(students);
     setScheduledStudents(scheduledJobs);
     setLateness(Zmax);
-    console.log(Zmax);
   };
 
   const handleBranchAndBoundAlgorithmButtonClick = () => {
@@ -159,7 +164,7 @@ const Task: React.FC<TaskProps> = ({ toggleIsExperimentsMode }) => {
         <>
           <div className="d-flex flex-wrap justify-content-center align-items-center m-1">
             <h5 className="bg-white mr-3">
-              Порядок складання іспиту студентами
+              Порядок складання іспиту студентами:
             </h5>
             {scheduledStudents.map((student, i) => (
               <h6 className="bg-white mr-2" key={student.i}>{`${

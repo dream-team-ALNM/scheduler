@@ -70,7 +70,6 @@ const Experiments: React.FC<ExperimentsProps> = ({
         executionTimeHillClimbingAlgorithm,
         accuracyHillClimbingAlgorithm,
       });
-      console.log(results.length);
     });
     setExperiments(results);
     setAverageExperimentResults(averageResults);
@@ -112,7 +111,6 @@ const Experiments: React.FC<ExperimentsProps> = ({
         executionTimeHillClimbingAlgorithm,
         accuracyHillClimbingAlgorithm,
       });
-      console.log(results.length);
     });
     setExperiments(results);
     setAverageExperimentResults(averageResults);
