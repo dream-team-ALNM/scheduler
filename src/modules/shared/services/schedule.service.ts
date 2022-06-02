@@ -54,7 +54,7 @@ class ScheduleService {
   public getZmaxViaBruteForceSearchAlgorithm<T extends IJob>(
     jobs: T[]
   ): number {
-    return getPermutation(jobs)
+    return getPermutation(jobs, jobs.length)
       .map((permutation) => getZmax(permutation))
       .sort((a, b) => b - a)
       .pop() as number;
