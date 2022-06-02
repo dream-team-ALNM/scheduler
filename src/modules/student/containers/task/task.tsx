@@ -1,5 +1,6 @@
 import moment from 'moment';
 import TimePicker, { TimePickerValue } from 'react-time-picker';
+import DatePicker from 'react-date-picker';
 import { useEffect, useState } from 'react';
 import { useFilePicker } from 'use-file-picker';
 import { css } from '@emotion/react';
@@ -25,6 +26,7 @@ const Task: React.FC<TaskProps> = ({ toggleIsExperimentsMode }) => {
   const [openFileSelector, { filesContent, loading, clear }] = useFilePicker({
     accept: ['.txt', '.json'],
   });
+  const [startDate, setStartDate] = useState(new Date());
 
   useEffect(() => {
     if (!filesContent.length) {
@@ -67,6 +69,7 @@ const Task: React.FC<TaskProps> = ({ toggleIsExperimentsMode }) => {
       scheduleService.applyGreedyAlgorithm(students);
     setScheduledStudents(scheduledJobs);
     setLateness(Zmax);
+    console.log(Zmax);
   };
 
   const handleBranchAndBoundAlgorithmButtonClick = () => {
@@ -91,11 +94,20 @@ const Task: React.FC<TaskProps> = ({ toggleIsExperimentsMode }) => {
     setLateness(Zmax);
   };
 
-  const getCalculatedStartDate = () => {
+  const getCalculatedStartTime = () => {
     const [hours, minutes] = startTime.split(':');
-    return moment(new Date().setHours(+hours, +minutes))
+    return moment(new Date(startDate).setHours(+hours, +minutes))
       .add(lateness * -1, 'm')
       .format('hh:mm');
+  };
+
+  const getCalculatedStartDate = () => {
+    const [hours, minutes] = startTime.split(':');
+    return new Date(
+      moment(new Date(startDate).setHours(+hours, +minutes))
+        .add(lateness * -1, 'm')
+        .format()
+    );
   };
 
   return (
@@ -126,6 +138,12 @@ const Task: React.FC<TaskProps> = ({ toggleIsExperimentsMode }) => {
           onChange={setStartTime as (value: TimePickerValue) => void}
           value={startTime}
         />
+        <DatePicker
+          format="dd-MM-y"
+          className="bg-white ml-3"
+          onChange={setStartDate as (value: TimePickerValue) => void}
+          value={startDate}
+        />
       </div>
       <Controls
         onGreedyAlgorithmButtonClick={handleGreedyAlgorithmButtonClick}
@@ -139,7 +157,7 @@ const Task: React.FC<TaskProps> = ({ toggleIsExperimentsMode }) => {
       />
       {!!scheduledStudents.length && (
         <>
-          <div className="d-flex justify-content-center align-items-center mb-1">
+          <div className="d-flex flex-wrap justify-content-center align-items-center m-1">
             <h5 className="bg-white mr-3">
               Порядок складання іспиту студентами
             </h5>
@@ -152,6 +170,11 @@ const Task: React.FC<TaskProps> = ({ toggleIsExperimentsMode }) => {
           <div className="d-flex justify-content-center align-items-center mb-1">
             <h5 className="bg-white">Розрахований час початку іспиту</h5>
             <TimePicker
+              className="bg-white ml-3"
+              value={getCalculatedStartTime()}
+            />
+            <DatePicker
+              format="dd-MM-y"
               className="bg-white ml-3"
               value={getCalculatedStartDate()}
             />
