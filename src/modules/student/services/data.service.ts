@@ -3,7 +3,7 @@ import { IStudent } from '../interfaces';
 
 class DataService {
   public generate(): IStudent[] {
-    const amountOfStudents = getRandomNumber(300, 301);
+    const amountOfStudents = getRandomNumber(2, 7);
     return this.generateByAmountOfStudents(amountOfStudents);
   }
 

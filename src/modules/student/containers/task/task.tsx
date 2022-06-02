@@ -188,7 +188,7 @@ const Task: React.FC<TaskProps> = ({ toggleIsExperimentsMode }) => {
       )}
       <Button
         variant="outline-info"
-        className="change-mode-button"
+        className="change-mode-button mb-3"
         onClick={toggleIsExperimentsMode}
       >
         Перейти до режиму експерименту
