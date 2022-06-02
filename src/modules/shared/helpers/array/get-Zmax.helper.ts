@@ -11,7 +11,7 @@ const getZmax = <T extends IJob>(scheduledJobs: T[]): number => {
   }
   return jobsWithCriterions
     .map((job) => job.Z)
-    .sort()
+    .sort((a, b) => (a as number) - (b as number))
     .pop() as number;
 };
 
