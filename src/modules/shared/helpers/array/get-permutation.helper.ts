@@ -1,22 +1,26 @@
+import _ from 'lodash';
 import { IJob } from '../../interfaces';
 
-const getPermutation = <T extends IJob>(array: T[]): T[][] => {
-  if (array.length > 1) {
-    const firstElement = array[0];
-    const returnedArray = getPermutation(array.slice(1));
-    const permutedArray = [] as T[][];
-    let temporaryArray = [] as T[];
-    const elementLength = returnedArray[0].length;
-    for (let i = 0; i < returnedArray.length; i++)
-      for (let j = 0; j <= elementLength; j++) {
-        temporaryArray = returnedArray[i].slice(0);
-        temporaryArray.splice(j, 0, firstElement);
-        permutedArray.push(temporaryArray);
-      }
-    return permutedArray;
-  } else {
-    return [array];
-  }
-};
+const getPermutation = <T extends IJob>(array: T[], n: number): T[][] => {
+	if (array.length < n) {
+		return [];
+	}
+	const recur = ((array: T[], n: number) => {
+		if (--n < 0) {
+			return [[]];
+		}
+		const permutations = [] as T[][];
+		array.forEach((value, index, array) => {
+			array = array.slice();
+			array.splice(index, 1);
+			recur(array, n).forEach(permutation => {
+				permutation.unshift(value);
+				permutations.push(permutation);
+			});
+		});
+		return permutations;
+	});
+	return recur(array, n);
+}
 
 export { getPermutation };
