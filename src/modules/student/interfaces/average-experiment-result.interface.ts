@@ -6,6 +6,7 @@ interface IAverageExperimentResult {
   averageAccuracyBranchAndBoundAlgorithm?: number;
   averageExecutionTimeHillClimbingAlgorithm?: number;
   averageAccuracyHillClimbingAlgorithm?: number;
+  [index: string]: number | undefined;
 }
 
 export type { IAverageExperimentResult };

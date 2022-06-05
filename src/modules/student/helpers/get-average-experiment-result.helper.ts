@@ -1,3 +1,4 @@
+import lodash from 'lodash';
 import { IAverageExperimentResult, IExperiment } from '../interfaces';
 
 const getAverageExperimentResult = (
@@ -5,7 +6,7 @@ const getAverageExperimentResult = (
   taskSize: number
 ): IAverageExperimentResult => {
   const getPartialResult = (fieldName: string) => {
-    if (results.some((result) => !!result.executionTimeGreedyAlgorithm)) {
+    if (results.some((result) => !lodash.isUndefined(result[fieldName]))) {
       return (
         (results
           .filter((result) => !!result[fieldName])

@@ -10,6 +10,7 @@ import { Button } from 'react-bootstrap';
 import { dataService } from '../../services';
 import './experiments.css';
 import { getAverageExperimentResult, getExperimentResult } from '../../helpers';
+import lodash from 'lodash';
 
 type ExperimentsProps = {
   toggleIsExperimentsMode: () => void;
@@ -78,7 +79,7 @@ const Experiments: React.FC<ExperimentsProps> = ({
   const handleRunBigExperimentsClick = () => {
     const results = [] as IExperiment[];
     const averageResults = [] as IAverageExperimentResult[];
-    const tasks = dataService.generateMany(1000, 100);
+    const tasks = dataService.generateMany(300, 1);
     tasks.forEach((task, i) => {
       const lastTaskSize = results[results.length - 1]?.taskSize;
       if (
@@ -87,33 +88,30 @@ const Experiments: React.FC<ExperimentsProps> = ({
       ) {
         averageResults.push(getAverageExperimentResult(results, lastTaskSize));
       }
-      const Zmax = scheduleService.getZmaxViaBruteForceSearchAlgorithm(task);
 
-      const {
-        timeDiff: executionTimeGreedyAlgorithm,
-        accuracy: accuracyGreedyAlgorithm,
-      } = getExperimentResult(task, scheduleService.applyGreedyAlgorithm, Zmax);
-
-      const {
-        timeDiff: executionTimeHillClimbingAlgorithm,
-        accuracy: accuracyHillClimbingAlgorithm,
-      } = getExperimentResult(
+      const { timeDiff: executionTimeGreedyAlgorithm } = getExperimentResult(
         task,
-        scheduleService.applyHillClimbingAlgorithm,
-        Zmax
+        scheduleService.applyGreedyAlgorithm
       );
+
+      const { timeDiff: executionTimeHillClimbingAlgorithm } =
+        getExperimentResult(task, scheduleService.applyHillClimbingAlgorithm);
 
       results.push({
         id: i + 1,
         taskSize: task.length,
         executionTimeGreedyAlgorithm,
-        accuracyGreedyAlgorithm,
         executionTimeHillClimbingAlgorithm,
-        accuracyHillClimbingAlgorithm,
       });
     });
     setExperiments(results);
     setAverageExperimentResults(averageResults);
+  };
+
+  const isChartDisplayed = (fieldNames: string[]) => {
+    return averageExperimentResults.some((result) =>
+      fieldNames.some((fieldName) => !lodash.isUndefined(result[fieldName]))
+    );
   };
 
   return (
@@ -137,22 +135,34 @@ const Experiments: React.FC<ExperimentsProps> = ({
         >
           Запустити експерименти для задач великих розмірностей
         </Button>
-        {!!experiments.length && experiments.length < 1000 && (
+        {!!experiments.length && (
           <>
-            <Chart
-              data={averageExperimentResults}
-              firstLabel="averageExecutionTimeGreedyAlgorithm"
-              secondLabel="averageExecutionTimeBranchAndBoundAlgorithm"
-              thirdLabel="averageExecutionTimeHillClimbingAlgorithm"
-              label="Час роботи алгоритму (хв)"
-            />
-            <Chart
-              data={averageExperimentResults}
-              firstLabel="averageAccuracyGreedyAlgorithm"
-              secondLabel="averageAccuracyBranchAndBoundAlgorithm"
-              thirdLabel="averageAccuracyHillClimbingAlgorithm"
-              label="Абсолютне відхилення від оптимуму (хв)"
-            />
+            {isChartDisplayed([
+              'averageExecutionTimeGreedyAlgorithm',
+              'averageExecutionTimeBranchAndBoundAlgorithm',
+              'averageExecutionTimeHillClimbingAlgorithm',
+            ]) && (
+              <Chart
+                data={averageExperimentResults}
+                firstLabel="averageExecutionTimeGreedyAlgorithm"
+                secondLabel="averageExecutionTimeBranchAndBoundAlgorithm"
+                thirdLabel="averageExecutionTimeHillClimbingAlgorithm"
+                label="Час роботи алгоритму (хв)"
+              />
+            )}
+            {isChartDisplayed([
+              'averageAccuracyGreedyAlgorithm',
+              'averageAccuracyBranchAndBoundAlgorithm',
+              'averageAccuracyHillClimbingAlgorithm',
+            ]) && (
+              <Chart
+                data={averageExperimentResults}
+                firstLabel="averageAccuracyGreedyAlgorithm"
+                secondLabel="averageAccuracyBranchAndBoundAlgorithm"
+                thirdLabel="averageAccuracyHillClimbingAlgorithm"
+                label="Абсолютне відхилення від оптимуму (хв)"
+              />
+            )}
           </>
         )}
         <Button

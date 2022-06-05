@@ -7,13 +7,19 @@ import {
   VictoryTheme,
   VictoryLegend,
 } from 'victory';
+import lodash from 'lodash';
 
 type ChartProps = {
-  data: { taskSize: number }[];
+  data: { taskSize: number; [index: string]: number | undefined }[];
   firstLabel: string;
   secondLabel: string;
   thirdLabel: string;
   label: string;
+};
+
+type LegendLabel = {
+  name: string;
+  symbol: { fill: string };
 };
 
 const Chart: React.FC<ChartProps> = ({
@@ -21,8 +27,18 @@ const Chart: React.FC<ChartProps> = ({
   firstLabel,
   secondLabel,
   thirdLabel,
-  label
+  label,
 }) => {
+  const isExist = (fieldName: string) => {
+    return data.some((el) => !lodash.isUndefined(el[fieldName]));
+  };
+  const isAlgorithmExist = (algorithmName: string) => {
+    return data.some((el) =>
+      Object.keys(el)
+        .filter((key) => !lodash.isUndefined(el[key]))
+        .some((key) => key.includes(algorithmName))
+    );
+  };
   return (
     <div className="chart">
       <VictoryChart theme={VictoryTheme.material} width={700} height={300}>
@@ -54,40 +70,48 @@ const Chart: React.FC<ChartProps> = ({
           centerTitle
           orientation="vertical"
           style={{ title: { fontSize: 10 } }}
-          data={[
-            {
-              name: 'Жадібний алгоритм',
-              symbol: { fill: 'rgb(99, 2, 189)' },
-            },
-            {
-              name: 'Алгоритм гілок та меж',
-              symbol: { fill: 'rgb(143, 71, 210)' },
-            },
-            {
-              name: 'Алгоритм сходження на вершину',
-              symbol: { fill: 'rgb(187, 113, 255)' },
-            },
-          ]}
+          data={
+            ([
+              isAlgorithmExist('Greedy') && {
+                name: 'Жадібний алгоритм',
+                symbol: { fill: 'rgb(99, 2, 189)' },
+              },
+              isAlgorithmExist('BranchAndBound') && {
+                name: 'Алгоритм гілок та меж',
+                symbol: { fill: 'rgb(143, 71, 210)' },
+              },
+              isAlgorithmExist('HillClimbing') && {
+                name: 'Алгоритм сходження на вершину',
+                symbol: { fill: 'rgb(187, 113, 255)' },
+              },
+            ].filter(Boolean) as LegendLabel[]) ?? []
+          }
         />
         <VictoryGroup offset={21}>
-          <VictoryBar
-            style={{ data: { fill: 'rgb(99, 2, 189)' } }}
-            data={data}
-            x="taskSize"
-            y={firstLabel}
-          />
-          <VictoryBar
-            style={{ data: { fill: 'rgb(143, 71, 210)' } }}
-            data={data}
-            x="taskSize"
-            y={secondLabel}
-          />
-          <VictoryBar
-            style={{ data: { fill: 'rgb(187, 113, 255)' } }}
-            data={data}
-            x="taskSize"
-            y={thirdLabel}
-          />
+          {isExist(firstLabel) && (
+            <VictoryBar
+              style={{ data: { fill: 'rgb(99, 2, 189)' } }}
+              data={data}
+              x="taskSize"
+              y={firstLabel}
+            />
+          )}
+          {isExist(secondLabel) && (
+            <VictoryBar
+              style={{ data: { fill: 'rgb(143, 71, 210)' } }}
+              data={data}
+              x="taskSize"
+              y={secondLabel}
+            />
+          )}
+          {isExist(thirdLabel) && (
+            <VictoryBar
+              style={{ data: { fill: 'rgb(187, 113, 255)' } }}
+              data={data}
+              x="taskSize"
+              y={thirdLabel}
+            />
+          )}
         </VictoryGroup>
       </VictoryChart>
     </div>

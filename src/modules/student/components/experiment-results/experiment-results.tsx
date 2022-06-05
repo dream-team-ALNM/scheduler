@@ -1,3 +1,4 @@
+import lodash from 'lodash';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { IExperiment } from '../../interfaces';
 import './experiment-results.css';
@@ -9,6 +10,12 @@ type ExperimentResultsProps = {
 const ExperimentResults: React.FC<ExperimentResultsProps> = ({
   experiments,
 }) => {
+  const isExist = (fieldName: string) => {
+    return experiments.some(
+      (result) => !lodash.isUndefined(result[fieldName])
+    );
+  };
+
   return (
     <div className="data-container">
       <BootstrapTable
@@ -23,24 +30,36 @@ const ExperimentResults: React.FC<ExperimentResultsProps> = ({
         <TableHeaderColumn dataField="taskSize">
           Розмірність задачі
         </TableHeaderColumn>
-        <TableHeaderColumn dataField="executionTimeGreedyAlgorithm">
-          Час виконання жадібного алгоритму, хв
-        </TableHeaderColumn>
-        <TableHeaderColumn dataField="executionTimeBranchAndBoundAlgorithm">
-          Час виконання методу гілок та меж, хв
-        </TableHeaderColumn>
-        <TableHeaderColumn dataField="executionTimeHillClimbingAlgorithm">
-          Час виконання методу сходження на вершину, хв
-        </TableHeaderColumn>
-        <TableHeaderColumn dataField="accuracyGreedyAlgorithm">
-          Точність жадібного алгоритму
-        </TableHeaderColumn>
-        <TableHeaderColumn dataField="accuracyBranchAndBoundAlgorithm">
-          Точність методу гілок та меж
-        </TableHeaderColumn>
-        <TableHeaderColumn dataField="accuracyHillClimbingAlgorithm">
-          Точність методу сходження на вершину
-        </TableHeaderColumn>
+        {isExist('executionTimeGreedyAlgorithm') && (
+          <TableHeaderColumn dataField="executionTimeGreedyAlgorithm">
+            Час виконання жадібного алгоритму, хв
+          </TableHeaderColumn>
+        )}
+        {isExist('executionTimeBranchAndBoundAlgorithm') && (
+          <TableHeaderColumn dataField="executionTimeBranchAndBoundAlgorithm">
+            Час виконання методу гілок та меж, хв
+          </TableHeaderColumn>
+        )}
+        {isExist('executionTimeHillClimbingAlgorithm') && (
+          <TableHeaderColumn dataField="executionTimeHillClimbingAlgorithm">
+            Час виконання методу сходження на вершину, хв
+          </TableHeaderColumn>
+        )}
+        {isExist('accuracyGreedyAlgorithm') && (
+          <TableHeaderColumn dataField="accuracyGreedyAlgorithm">
+            Точність жадібного алгоритму
+          </TableHeaderColumn>
+        )}
+        {isExist('accuracyBranchAndBoundAlgorithm') && (
+          <TableHeaderColumn dataField="accuracyBranchAndBoundAlgorithm">
+            Точність методу гілок та меж
+          </TableHeaderColumn>
+        )}
+        {isExist('accuracyHillClimbingAlgorithm') && (
+          <TableHeaderColumn dataField="accuracyHillClimbingAlgorithm">
+            Точність методу сходження на вершину
+          </TableHeaderColumn>
+        )}
       </BootstrapTable>
     </div>
   );

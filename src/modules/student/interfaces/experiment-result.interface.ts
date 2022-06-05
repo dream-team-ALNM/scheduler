@@ -1,6 +1,6 @@
 interface IExperimentResult {
-  timeDiff: number;
-  accuracy: number;
+  timeDiff?: number;
+  accuracy?: number;
 }
 
 export type { IExperimentResult };
