@@ -12,7 +12,7 @@ class DataService {
     amountOfSame: number
   ): IStudent[][] {
     const groups = [] as IStudent[][];
-    for (let i = 2; i < maxAmountOfStudents; i++) {
+    for (let i = 2; i <= maxAmountOfStudents; i++) {
       for (let j = 0; j < amountOfSame; j++) {
         groups.push(this.generateByAmountOfStudents(i));
       }

@@ -27,7 +27,7 @@ const Experiments: React.FC<ExperimentsProps> = ({
   const handleRunExperimentsClick = () => {
     const results = [] as IExperiment[];
     const averageResults = [] as IAverageExperimentResult[];
-    const tasks = dataService.generateMany(7, 100);
+    const tasks = dataService.generateMany(6, 100);
     tasks.forEach((task, i) => {
       const lastTaskSize = results[results.length - 1]?.taskSize;
       if (
@@ -71,6 +71,11 @@ const Experiments: React.FC<ExperimentsProps> = ({
         executionTimeHillClimbingAlgorithm,
         accuracyHillClimbingAlgorithm,
       });
+
+      if (i === tasks.length - 1) {
+        const lastTaskSize = results[results.length - 1]?.taskSize;
+        averageResults.push(getAverageExperimentResult(results, lastTaskSize));
+      }
     });
     setExperiments(results);
     setAverageExperimentResults(averageResults);
@@ -82,10 +87,7 @@ const Experiments: React.FC<ExperimentsProps> = ({
     const tasks = dataService.generateMany(300, 1);
     tasks.forEach((task, i) => {
       const lastTaskSize = results[results.length - 1]?.taskSize;
-      if (
-        (lastTaskSize && task.length > lastTaskSize) ||
-        i === tasks.length - 1
-      ) {
+      if (lastTaskSize && task.length > lastTaskSize) {
         averageResults.push(getAverageExperimentResult(results, lastTaskSize));
       }
 
@@ -103,6 +105,11 @@ const Experiments: React.FC<ExperimentsProps> = ({
         executionTimeGreedyAlgorithm,
         executionTimeHillClimbingAlgorithm,
       });
+
+      if (i === tasks.length - 1) {
+        const lastTaskSize = results[results.length - 1]?.taskSize;
+        averageResults.push(getAverageExperimentResult(results, lastTaskSize));
+      }
     });
     setExperiments(results);
     setAverageExperimentResults(averageResults);
